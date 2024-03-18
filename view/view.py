@@ -65,8 +65,6 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.history.grid_remove()
 
-        self.separator.grid_remove()
-
         if value == "Active Users":
             self.active_users.grid(row=0, column=0, padx=20, pady=20, sticky="n")
             self.separator.grid(row=0, column=0, padx=(0, 280), pady=0, sticky="n")
