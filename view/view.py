@@ -33,7 +33,9 @@ class MenuFrame(customtkinter.CTkFrame):
             menu.grid(row=i+1, column=0, padx=10, pady=20, sticky="w")
             self.menus.append(menu)
 
-        about_button = customtkinter.CTkButton(self, text="About")
+        about_button = customtkinter.CTkButton(self, text="About", font=("Inter", 14, "bold"),
+                                               fg_color="transparent", hover_color="gray90",
+                                               text_color="black", command=self.show_about)
         about_button.grid(row=5, column=0, padx=10, pady=(170, 20), sticky="w")
 
         self.active_users.grid_remove()
@@ -82,6 +84,10 @@ class MenuFrame(customtkinter.CTkFrame):
             self.separator.grid(row=0, column=0, padx=(0, 280), pady=0, sticky="n")
         else:
             raise Exception("Not in the menu")
+
+    def show_about(self):
+        print("Hello, World")
+
 
 class ActiveUserFrame(customtkinter.CTkFrame):
     def __init__(self, master):
