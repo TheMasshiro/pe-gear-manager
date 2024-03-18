@@ -1,5 +1,6 @@
-from view.view import *
-
+import view.view as view
 
 if __name__ == "__main__":
-    sendDisplay()
+    app = view.App()
+    app.after(0, lambda: app.wm_state('zoomed'))
+    app.mainloop()
