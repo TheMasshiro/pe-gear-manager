@@ -3,6 +3,7 @@ import os
 from PIL import ImageTk, Image
 from tkinter import ttk
 import tkinter as tk
+import webbrowser
 
 path = os.getcwd()
 
@@ -25,7 +26,7 @@ class MenuFrame(customtkinter.CTkFrame):
 
         university_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "view/assets/school_logo.png")), size=(80, 80))
         university_logo = customtkinter.CTkLabel(self, text="", image=university_icon)
-        university_logo.grid(row=0, column=0, padx=20, pady=(20, 100), sticky="n")
+        university_logo.grid(row=0, column=0, padx=20, pady=(20, 110), sticky="n")
 
 
         for i, value in enumerate(self.values):
@@ -36,7 +37,8 @@ class MenuFrame(customtkinter.CTkFrame):
         about_button = customtkinter.CTkButton(self, text="About", font=("Inter", 14, "bold"),
                                                fg_color="transparent", hover_color="gray90",
                                                text_color="black", command=self.show_about)
-        about_button.grid(row=5, column=0, padx=10, pady=(170, 20), sticky="w")
+        about_button.grid(row=5, column=0, padx=10, pady=(160, 20), sticky="w")
+        self.about_window = None
 
         self.active_users.grid_remove()
 
@@ -69,7 +71,7 @@ class MenuFrame(customtkinter.CTkFrame):
             self.active_users.grid(row=0, column=0, padx=20, pady=20, sticky="n")
             self.separator.grid(row=0, column=0, padx=(0, 280), pady=0, sticky="n")
         elif value == "Sign In/Out":
-            self.sign_in.grid(row=0, column=0, padx=(230, 10), pady=30, sticky="n")
+            self.sign_in.grid(row=0, column=0, padx=(225, 10), pady=30, sticky="n")
             self.sign_out.grid(row=0, column=1, padx=(10, 70), pady=30, sticky="n")
             self.separator.grid(row=0, column=0, padx=(0, 290), pady=0, sticky="n")
         elif value == "Add Equipments":
@@ -84,7 +86,10 @@ class MenuFrame(customtkinter.CTkFrame):
             raise Exception("Not in the menu")
 
     def show_about(self):
-        print("Hello, World")
+        if self.about_window is None or not self.about_window.winfo_exists():
+            self.about_window = AboutApplicationWindow(self)
+        else:
+            self.about_window.focus_force()
 
 
 class ActiveUserFrame(customtkinter.CTkFrame):
@@ -293,6 +298,53 @@ class Separator(customtkinter.CTkFrame):
 
         line = customtkinter.CTkFrame(self, width=2, height=self.winfo_screenheight(), border_width=1, border_color="black")
         line.grid(row=0, column=0, sticky="w")
+
+class AboutApplicationWindow(customtkinter.CTkToplevel):
+    def __init__(self, master):
+        super().__init__(master)
+        self.title("About Application")
+        self.geometry("500x400")
+        self.resizable(False, False)
+        self.grab_set()
+
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
+
+        self.columnconfigure(3, minsize=50)
+
+        self.any_bugs = customtkinter.CTkLabel(self, text="Found Any Bugs?", font=("Inter", 15, "bold"))
+        self.any_bugs.grid(row=0, column=0, columnspan=4, padx=20, pady=20, sticky="n")
+
+        self.contact_label = customtkinter.CTkLabel(self, text="Contact Me At", font=("Inter", 15, "bold"))
+        self.contact_label.grid(row=1, column=0, columnspan=4, padx=20, pady=20, sticky="n")
+
+        self.facebook_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "view/assets/facebook_icon.png")), size=(80, 80))
+        self.facebook_link = customtkinter.CTkLabel(self, text="", image=self.facebook_icon, cursor="hand2")
+        self.facebook_link.grid(row=2, column=0, padx=(125, 0), pady=(10, 20), sticky="nw")
+        self.facebook_link.bind("<Button-1>", lambda e: self.open_link("https://www.facebook.com/Inchan.Vi/"))
+
+        self.github_mark = customtkinter.CTkImage(Image.open(os.path.join(path, "view/assets/github_mark.png")), size=(80, 80))
+        self.github_link = customtkinter.CTkLabel(self, text="", image=self.github_mark, cursor="hand2")
+        self.github_link.grid(row=2, column=2, padx=(0, 70), pady=(10, 10), sticky="ne")
+        self.github_link.bind("<Button-1>", lambda e: self.open_link("https://github.com/TheMasshiro"))
+
+        self.facebook_label = customtkinter.CTkLabel(self, text="Facebook", font=("Inter", 13, "bold"))
+        self.facebook_label.grid(row=3, column=0, padx=(0, 40), pady=(0, 20), sticky="e")
+
+        self.github_label = customtkinter.CTkLabel(self, text="Github", font=("Inter", 13, "bold"))
+        self.github_label.grid(row=3, column=2, padx=(50, 0), pady=(0, 20), sticky="w")
+
+        self.made_label = customtkinter.CTkLabel(self, text="Made By John Christian Vicente", font=("Inter", 14, "bold"))
+        self.made_label.grid(row=4, column=0, columnspan=4, padx=20, pady=10, sticky="s")
+
+        self.button = customtkinter.CTkButton(self, text="Close")
+        self.button.grid(row=5, column=0, columnspan=4, padx=20, pady=(10, 20), sticky="s")
+        self.button.configure(command=self.destroy)
+
+    def open_link(self, url):
+        webbrowser.open_new(url)
+
 
 class App(customtkinter.CTk):
     def __init__(self):
