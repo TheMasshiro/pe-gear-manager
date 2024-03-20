@@ -6,14 +6,14 @@
     "fg_color": ["gray95", "gray10"]
   },
   "CTkFrame": {
-    "corner_radius": 8,
+    "corner_radius": 10,
     "border_width": 0,
     "fg_color": ["gray90", "gray13"],
     "top_fg_color": ["gray85", "gray16"],
     "border_color": ["gray65", "gray28"]
   },
   "CTkButton": {
-    "corner_radius": 8,
+    "corner_radius": 10,
     "border_width": 0,
     "fg_color": ["#3a7ebf", "#1f538d"],
     "hover_color": ["#325882", "#14375e"],
@@ -27,7 +27,7 @@
     "text_color": ["gray14", "gray84"]
   },
   "CTkEntry": {
-    "corner_radius": 8,
+    "corner_radius": 10,
     "border_width": 2,
     "fg_color": ["#F9F9FA", "#343638"],
     "border_color": ["#979DA2", "#565B5E"],
@@ -83,7 +83,7 @@
     "button_hover_color": ["#325882", "#14375e"]
   },
   "CTkOptionMenu": {
-    "corner_radius": 8,
+    "corner_radius": 10,
     "fg_color": ["gray95", "gray10"],
     "button_color": ["#3a7ebf", "#1f538d"],
     "button_hover_color": ["#325882", "#14375e"],
@@ -91,7 +91,7 @@
     "text_color_disabled": ["gray74", "gray60"]
   },
   "CTkComboBox": {
-    "corner_radius": 8,
+    "corner_radius": 10,
     "border_width": 2,
     "fg_color": ["#F9F9FA", "#343638"],
     "border_color": ["#979DA2", "#565B5E"],
@@ -108,7 +108,7 @@
     "button_hover_color": ["gray40", "gray53"]
   },
   "CTkSegmentedButton": {
-    "corner_radius": 8,
+    "corner_radius": 10,
     "border_width": 2,
     "fg_color": ["#dddddd", "gray29"],
     "selected_color": ["#3a7ebf", "#1f538d"],
@@ -119,7 +119,7 @@
     "text_color_disabled": ["gray74", "gray60"]
   },
   "CTkTextbox": {
-    "corner_radius": 8,
+    "corner_radius": 10,
     "border_width": 0,
     "fg_color": ["gray100", "gray20"],
     "border_color": ["#979DA2", "#565B5E"],
@@ -137,8 +137,8 @@
   },
   "CTkFont": {
     "macOS": {
-      "family": "SF Display",
-      "size": 13,
+      "family": "Inter",
+      "size": 14,
       "weight": "normal"
     },
     "Windows": {
@@ -147,8 +147,8 @@
       "weight": "normal"
     },
     "Linux": {
-      "family": "Roboto",
-      "size": 13,
+      "family": "Inter",
+      "size": 14,
       "weight": "normal"
     }
   }

@@ -53,7 +53,7 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.separator.grid_remove()
 
-        self.show_frame(self.values[1])
+        self.show_frame(self.values[0])
 
     def show_frame(self, value):
         self.active_users.grid_remove()
@@ -68,8 +68,8 @@ class MenuFrame(customtkinter.CTkFrame):
         self.history.grid_remove()
 
         if value == "Active Users":
-            self.active_users.grid(row=0, column=0, padx=20, pady=20, sticky="n")
-            self.separator.grid(row=0, column=0, padx=(0, 280), pady=0, sticky="n")
+            self.active_users.grid(row=0, column=0, padx=(200, 20), pady=30, sticky="n")
+            self.separator.grid(row=0, column=0, padx=(0, 960), pady=0, sticky="n")
         elif value == "Sign In/Out":
             self.sign_in.grid(row=0, column=0, padx=(225, 10), pady=30, sticky="n")
             self.sign_out.grid(row=0, column=1, padx=(10, 70), pady=30, sticky="n")
@@ -99,8 +99,38 @@ class ActiveUserFrame(customtkinter.CTkFrame):
         self._border_color = "black"
         self._border_width = 1
 
-        label = customtkinter.CTkLabel(self, text="Current Users")
+        label = customtkinter.CTkLabel(self, text="Current Users", font=("Inter", 25, "bold"))
         label.grid(row=0, column=0, padx=100, pady=20, sticky="s")
+
+        status_button = customtkinter.CTkButton(self, text="Check Status", font=("Inter", 14, "bold"))
+        status_button.grid(row=2, column=0, columnspan=2, padx=20, pady=20, sticky="n")
+
+        style = ttk.Style()
+        style.theme_use("default")
+        style.configure("Treeview", font = ("Inter", 10), background="#eeeeee", foreground="black", lrowheight=25,
+                        fieldbackground="#eeeeee", bordercolor="#eeeeee", borderwidth=0)
+        style.map('Treeview', background=[('selected', "#cccccc")])
+        style.configure("Treeview.Heading", font = ("Inter", 11, "bold"), background="#dddddd", foreground="black", relief="flat")
+        style.map("Treeview.Heading",
+                      background=[('active', "#cccccc")])
+
+        tree = ttk.Treeview(self, height=23)
+
+        tree["columns"] = ("Student ID", "Name", "Course", "Sign In Time")
+
+        tree.column("#0", width=0, stretch=tk.NO)
+        tree.column("Student ID", anchor=tk.CENTER, width=200)
+        tree.column("Name", anchor=tk.CENTER, width=200)
+        tree.column("Course", anchor=tk.CENTER, width=200)
+        tree.column("Sign In Time", anchor=tk.CENTER, width=200)
+
+        tree.heading("Student ID", text="Student ID")
+        tree.heading("Name", text="Name")
+        tree.heading("Course", text="Course")
+        tree.heading("Sign In Time", text="Sign In Time")
+
+        tree.grid(row=1, column=0, padx=20, pady=20, sticky="n")
+
 
 class SignInFrame(customtkinter.CTkFrame):
     def __init__(self, master):
@@ -108,6 +138,7 @@ class SignInFrame(customtkinter.CTkFrame):
 
         self._border_color = "black"
         self._border_width = 1
+        self.get_equipment_window = None
 
         label = customtkinter.CTkLabel(self, text="Sign In", font=("Inter", 25, "bold"))
         label.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 30), sticky="ns")
@@ -132,24 +163,32 @@ class SignInFrame(customtkinter.CTkFrame):
         student_course = customtkinter.CTkEntry(self, width=80)
         student_course.grid(row=4, column=1, padx=20, pady=20, sticky="w")
 
-        year_label = customtkinter.CTkLabel(self, text="Year", font=("Inter", 14, "bold"))
+        year_label = customtkinter.CTkLabel(self, text="Year Level", font=("Inter", 14, "bold"))
         year_label.grid(row=5, column=0, padx=20, pady=20, sticky="w")
-        student_year = customtkinter.CTkOptionMenu(self, values=["1", "2", "3", "4"], width=70)
+        student_year = customtkinter.CTkOptionMenu(self, values=["1st-Year", "2nd-Year", "3rd-Year", "4th-Year"], width=110)
         student_year.grid(row=5, column=1, padx=20, pady=20, sticky="w")
 
         section_label = customtkinter.CTkLabel(self, text="Section", font=("Inter", 14, "bold"))
         section_label.grid(row=6, column=0, padx=20, pady=20, sticky="w")
-        student_section = customtkinter.CTkEntry(self, width=30)
+        student_section = customtkinter.CTkEntry(self, justify="center",  width=40)
         student_section.grid(row=6, column=1, padx=20, pady=20, sticky="w")
 
         blank_label = customtkinter.CTkLabel(self, text="")
         blank_label.grid(row=7, column=0, padx=20, pady=20, sticky="w")
 
-        sign_in_button = customtkinter.CTkButton(self, text="Sign In", font=("Inter", 15, "bold"))
+        sign_in_button = customtkinter.CTkButton(self, text="Sign In", font=("Inter", 15, "bold"), command=self.get_equipment)
         sign_in_button.grid(row=8, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="ns")
 
         sign_up_button = customtkinter.CTkButton(self, text="Sign Up", font=("Inter", 15, "bold"), fg_color="#0496ff", hover_color="#006ba6")
         sign_up_button.grid(row=9, column=0, columnspan=2, padx=20, pady=(10, 20), sticky="ns")
+
+    def get_equipment(self):
+        if self.get_equipment_window is None or not self.get_equipment_window.winfo_exists():
+            self.get_equipment_window = GetEquipmentWindow(self)
+        else:
+            self.get_equipment_window.focus_force()
+
+
 
 class SignOutFrame(customtkinter.CTkFrame):
     def __init__(self, master):
@@ -203,12 +242,12 @@ class AddEquipmentFrame(customtkinter.CTkFrame):
         sort_label = customtkinter.CTkLabel(self, text="Sort By", font=("Inter", 14, "bold"))
         sort_label.grid(row=1, column=0, padx=(40, 5), pady=(20, 0), sticky="w")
         sort_option = customtkinter.CTkSegmentedButton(self, values=["ID", "Name", "Quantity"])
-        sort_option.grid(row=1, column=0, padx=(10, 180), pady=(20, 0), sticky="e")
+        sort_option.grid(row=1, column=0, padx=(10, 165), pady=(20, 0), sticky="e")
 
         sort_label_2 = customtkinter.CTkLabel(self, text="Order", font=("Inter", 14, "bold"))
         sort_label_2.grid(row=2, column=0, padx=(40, 5), pady=5, sticky="w")
         sort_option_2 = customtkinter.CTkSegmentedButton(self, values=["↑", "↓"])
-        sort_option_2.grid(row=2, column=0, padx=(10, 280), pady=5, sticky="e")
+        sort_option_2.grid(row=2, column=0, padx=(10, 270), pady=5, sticky="e")
 
 
 
@@ -292,6 +331,8 @@ class HistoryFrame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
+        # TODO basically just a tkinter tree that could check history based on sign out time
+
 class Separator(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
@@ -338,12 +379,23 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         self.made_label = customtkinter.CTkLabel(self, text="Made By John Christian Vicente", font=("Inter", 14, "bold"))
         self.made_label.grid(row=4, column=0, columnspan=4, padx=20, pady=10, sticky="s")
 
-        self.button = customtkinter.CTkButton(self, text="Close")
+        self.button = customtkinter.CTkButton(self, text="Close", font=("Inter", 14, "bold"))
         self.button.grid(row=5, column=0, columnspan=4, padx=20, pady=(10, 20), sticky="s")
         self.button.configure(command=self.destroy)
 
     def open_link(self, url):
         webbrowser.open_new(url)
+
+class GetEquipmentWindow(customtkinter.CTkToplevel):
+    def __init__(self, master):
+        super().__init__(master)
+        self.title("Get Equipments")
+        self.geometry("600x400")
+        self.resizable(False, False)
+        self.grab_set()
+
+        # TODO
+        # ask the user for input in text box
 
 
 class App(customtkinter.CTk):
