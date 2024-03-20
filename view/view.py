@@ -53,7 +53,7 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.separator.grid_remove()
 
-        self.show_frame(self.values[0])
+        self.show_frame(self.values[1])
 
     def show_frame(self, value):
         self.active_users.grid_remove()
