@@ -673,7 +673,7 @@ class GetEquipmentWindow(customtkinter.CTkToplevel):
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.title("P.E. Inventory")
+        self.title("PE Borrow Buddy")
         self.iconpath = ImageTk.PhotoImage(
             file=os.path.join(path, "src/view/assets/icon.png")
         )
