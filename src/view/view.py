@@ -5,7 +5,7 @@ from tkinter import ttk
 import tkinter as tk
 import webbrowser
 from CTkMessagebox import CTkMessagebox
-import controller.validation as validation
+import src.controller.validation as validation
 
 path = os.getcwd()
 
@@ -26,7 +26,7 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.menus = []
 
-        university_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "view/assets/school_logo.png")), size=(80, 80))
+        university_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "src/view/assets/school_logo.png")), size=(80, 80))
         university_logo = customtkinter.CTkLabel(self, text="", image=university_icon)
         university_logo.grid(row=0, column=0, padx=20, pady=(20, 110), sticky="n")
 
@@ -297,7 +297,7 @@ class InventoryButtonsFrame(customtkinter.CTkFrame):
         self._border_color = "black"
         self._border_width = 1
 
-        inventory_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "view/assets/inventory_image.png")), size=(80, 80))
+        inventory_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "src/view/assets/inventory_image.png")), size=(80, 80))
         inventory_label = customtkinter.CTkLabel(self, text="", image=inventory_icon)
         inventory_label.grid(row=0, column=0, columnspan=2, padx=20, pady=20, sticky="n")
 
@@ -408,12 +408,12 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         self.contact_label = customtkinter.CTkLabel(self, text="Contact Me At", font=("Inter", 15, "bold"))
         self.contact_label.grid(row=1, column=0, columnspan=4, padx=20, pady=20, sticky="n")
 
-        self.facebook_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "view/assets/facebook_icon.png")), size=(80, 80))
+        self.facebook_icon = customtkinter.CTkImage(Image.open(os.path.join(path, "src/view/assets/facebook_icon.png")), size=(80, 80))
         self.facebook_link = customtkinter.CTkLabel(self, text="", image=self.facebook_icon, cursor="hand2")
         self.facebook_link.grid(row=2, column=0, padx=(125, 0), pady=(10, 20), sticky="nw")
         self.facebook_link.bind("<Button-1>", lambda e: self.open_link("https://www.facebook.com/Inchan.Vi/"))
 
-        self.github_mark = customtkinter.CTkImage(Image.open(os.path.join(path, "view/assets/github_mark.png")), size=(80, 80))
+        self.github_mark = customtkinter.CTkImage(Image.open(os.path.join(path, "src/view/assets/github_mark.png")), size=(80, 80))
         self.github_link = customtkinter.CTkLabel(self, text="", image=self.github_mark, cursor="hand2")
         self.github_link.grid(row=2, column=2, padx=(0, 70), pady=(10, 10), sticky="ne")
         self.github_link.bind("<Button-1>", lambda e: self.open_link("https://github.com/TheMasshiro"))
@@ -450,7 +450,7 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("P.E. Inventory")
-        self.iconpath = ImageTk.PhotoImage(file=os.path.join(path,"view/assets/icon.png"))
+        self.iconpath = ImageTk.PhotoImage(file=os.path.join(path,"src/view/assets/icon.png"))
         self.wm_iconbitmap()
         self.iconphoto(False, self.iconpath)
 

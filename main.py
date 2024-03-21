@@ -1,4 +1,4 @@
-import view.view as view
+import src.view.view as view
 
 if __name__ == "__main__":
     app = view.App()
