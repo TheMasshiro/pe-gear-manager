@@ -1,21 +1,22 @@
-import os
 import tkinter as tk
 import webbrowser
 from tkinter import ttk
+from pathlib import Path
 
 import customtkinter
+from CTkMessagebox import CTkMessagebox
+from PIL import Image, ImageTk
+
 from src.controller import (
     validate_id,
     validate_name,
     validate_phone_number,
     validate_course,
     validate_section,
+    insert_data
 )
-from CTkMessagebox import CTkMessagebox
-from PIL import Image, ImageTk
 
-path = os.getcwd()
-
+asset_dir = Path(__file__).parent.absolute()
 
 class MenuFrame(customtkinter.CTkFrame):
     def __init__(
@@ -46,7 +47,7 @@ class MenuFrame(customtkinter.CTkFrame):
         self.menus = []
 
         university_icon = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/school_logo.png")),
+            Image.open(asset_dir / "assets" / "school_logo.png"),
             size=(80, 80),
         )
         university_logo = customtkinter.CTkLabel(self, text="", image=university_icon)
@@ -275,8 +276,17 @@ class SignInFrame(customtkinter.CTkFrame):
             and validate_name(self.student_name.get())
             and validate_phone_number(self.student_number.get())
             and validate_course(self.student_course.get())
+            and self.student_year.get()
             and validate_section(self.student_section.get())
         ):
+            id = self.id_number.get()
+            name = self.student_name.get()
+            number = self.student_number.get()
+            course = self.student_course.get()
+            year = self.student_year.get()
+            section = self.student_section.get()
+            insert_data(id, name, number, course, year, section)
+
             CTkMessagebox(
                 title="Sign Up",
                 message="Successfuly Registered",
@@ -438,7 +448,7 @@ class InventoryButtonsFrame(customtkinter.CTkFrame):
         self._border_width = 1
 
         inventory_icon = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/inventory_image.png")),
+            Image.open(asset_dir / "assets" / "inventory_image.png"),
             size=(80, 80),
         )
         inventory_label = customtkinter.CTkLabel(self, text="", image=inventory_icon)
@@ -611,7 +621,7 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         )
 
         self.facebook_icon = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/facebook_icon.png")),
+            Image.open(asset_dir / "assets" / "facebook_icon.png"),
             size=(80, 80),
         )
         self.facebook_link = customtkinter.CTkLabel(
@@ -626,7 +636,7 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         )
 
         self.github_mark = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/github_mark.png")),
+            Image.open(asset_dir / "assets" / "github_mark.png"),
             size=(80, 80),
         )
         self.github_link = customtkinter.CTkLabel(
@@ -685,7 +695,7 @@ class App(customtkinter.CTk):
         super().__init__()
         self.title("PE Gear Manager")
         self.iconpath = ImageTk.PhotoImage(
-            file=os.path.join(path, "src/view/assets/icon.png")
+            file=asset_dir / "assets" / "icon.png"
         )
         self.wm_iconbitmap()
         self.iconphoto(False, self.iconpath)
