@@ -1,40 +1,28 @@
 // Module : libvalidation.c
-<<<<<<< HEAD:src/model/libvalidation.c
-// 
-=======
 //
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
+//
 // This module implements function
 // to validate the ID number,
 // Name, Phone number, Course
 // and Section
 //
-<<<<<<< HEAD:src/model/libvalidation.c
-//Returns True if the data is valid
-//Returns False if invalid
-=======
 // Returns True if the data is valid
 // Returns False if invalid
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
+// Returns True if the data is valid
+// Returns False if invalid
 //
 
 #include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
 
-<<<<<<< HEAD:src/model/libvalidation.c
-// Add constraint for max length of name 
-=======
 // Add constraint for max length of name
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
+// Add constraint for max length of name
 #define MAX_NAME_LENGTH 50
 
 bool validate_id_number(const char *id_number) {
   // Function to validate ID Number
-<<<<<<< HEAD:src/model/libvalidation.c
 
-=======
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
   int len = strlen(id_number);
 
   if (len != 11) {
@@ -90,10 +78,6 @@ bool validate_name(const char *name) {
 
 bool validate_phone_number(const char *phone_number) {
   // Function to validate phone number
-<<<<<<< HEAD:src/model/libvalidation.c
-
-=======
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
   int len = strlen(phone_number);
   if (len != 11) {
     return false;
@@ -114,10 +98,6 @@ bool validate_phone_number(const char *phone_number) {
 
 bool validate_course(const char *course) {
   // Function to validate course
-<<<<<<< HEAD:src/model/libvalidation.c
-
-=======
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
   int len = strlen(course);
 
   if (len <= 2) {
@@ -138,10 +118,6 @@ bool validate_course(const char *course) {
 
 bool validate_section(const char *section) {
   // Function to validate section
-<<<<<<< HEAD:src/model/libvalidation.c
-  
-=======
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
   int len = strlen(section);
   if (len != 1) {
     return false;
@@ -156,11 +132,8 @@ bool validate_section(const char *section) {
 
 //
 // No need of main function
-<<<<<<< HEAD:src/model/libvalidation.c
-// Because file is directly 
-=======
 // Because file is directly
->>>>>>> wip/2-database-handling:utils/validation/libvalidation.c
+// Because file is directly
 // Being called from validation.py
 // If ran seprately an error will be
 // shown due to missing main
