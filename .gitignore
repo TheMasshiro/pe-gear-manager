@@ -154,7 +154,8 @@ cython_debug/
 
 #
 Makefile
-.db
+*.db
+src/model/data/*.db
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

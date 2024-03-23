@@ -23,6 +23,8 @@ from src.controller import (
     validate_course,
     validate_section,
     insert_data,
+    id_data_exists,
+    name_data_exists,
 )
 
 # Get the current working dictionary
@@ -298,7 +300,7 @@ class SignInFrame(customtkinter.CTkFrame):
     def sign_up_popup(self):
         """Opens a popup window for signing up new users"""
 
-        if (
+        if not (
             validate_id(self.id_number.get())
             and validate_name(self.student_name.get())
             and validate_phone_number(self.student_number.get())
@@ -306,27 +308,37 @@ class SignInFrame(customtkinter.CTkFrame):
             and self.student_year.get()
             and validate_section(self.student_section.get())
         ):
-            id = self.id_number.get()
-            name = self.student_name.get()
-            number = self.student_number.get()
-            course = self.student_course.get()
-            year = self.student_year.get()
-            section = self.student_section.get()
-            insert_data(id, name, number, course, year, section)
-
             CTkMessagebox(
-                title="Sign Up",
-                message="Successfuly Registered",
-                icon="check",
+                title="Sign Up Error",
+                message="Please properly fill in the fields.",
+                icon="cancel",
+                option_1="OK",
+                justify="center",
+                corner_radius=10,
+            )
+        elif id_data_exists(self.id_number.get()) or name_data_exists(
+            self.student_name.get()
+        ):
+            CTkMessagebox(
+                title="Sign Up Error",
+                message="Student ID or Name Already Exists.",
+                icon="cancel",
                 option_1="OK",
                 justify="center",
                 corner_radius=10,
             )
         else:
+            id = self.id_number.get()
+            name = self.student_name.get().title()
+            number = self.student_number.get()
+            course = self.student_course.get().upper()
+            year = self.student_year.get()
+            section = self.student_section.get().upper()
+            insert_data(id, name, number, course, year, section)
             CTkMessagebox(
-                title="Sign Up Error",
-                message="Please properly fill in the fields.",
-                icon="cancel",
+                title="Sign Up",
+                message="Successfuly Registered",
+                icon="check",
                 option_1="OK",
                 justify="center",
                 corner_radius=10,
