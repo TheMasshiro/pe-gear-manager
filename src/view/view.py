@@ -1,3 +1,13 @@
+"""
+Module : view.py
+This module is used to
+create the user interface.
+It is responsible for creating
+diffrent tabs like check-in
+while also sending data to
+backend for computation and storage
+"""
+
 import tkinter as tk
 import webbrowser
 from tkinter import ttk
@@ -16,9 +26,11 @@ from src.controller import (
     insert_data
 )
 
+# Get the current working dictionary
 asset_dir = Path(__file__).parent.absolute()
 
 class MenuFrame(customtkinter.CTkFrame):
+    # Class to represent main menu frame
     def __init__(
         self,
         master,
@@ -32,6 +44,7 @@ class MenuFrame(customtkinter.CTkFrame):
         history,
         separator,
     ):
+        """ Initialize and create MenuFrame Interface"""
         super().__init__(master)
 
         self.values = values
@@ -91,6 +104,7 @@ class MenuFrame(customtkinter.CTkFrame):
         self.show_frame(self.values[1])
 
     def show_frame(self, value):
+        """ Function to place the tabs on the screen"""
         self.active_users.grid_remove()
 
         self.sign_in.grid_remove()
@@ -127,6 +141,7 @@ class MenuFrame(customtkinter.CTkFrame):
             raise Exception("Not in the menu")
 
     def show_about(self):
+        """Display information related to signing out a user"""
         if self.about_window is None or not self.about_window.winfo_exists():
             self.about_window = AboutApplicationWindow(self)
         else:
@@ -134,7 +149,9 @@ class MenuFrame(customtkinter.CTkFrame):
 
 
 class ActiveUserFrame(customtkinter.CTkFrame):
+    """ Represents the frame for displaying active users """
     def __init__(self, master):
+        """ Initialize and Displays the ACtiveUserFrame widgets """
         super().__init__(master)
 
         self._border_color = "black"
@@ -191,6 +208,7 @@ class ActiveUserFrame(customtkinter.CTkFrame):
 
 
 class SignInFrame(customtkinter.CTkFrame):
+
     def __init__(self, master):
         super().__init__(master)
 
