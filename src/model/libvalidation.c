@@ -28,7 +28,6 @@ bool validate_name(const char *name) {
     return false;
   }
 
-  bool first_char_seen = false;
   bool prev_char_was_space = false;
 
   for (int i = 0; i < len; ++i) {
@@ -38,22 +37,14 @@ bool validate_name(const char *name) {
       return false;
     }
 
-    if (c == ' ' && prev_char_was_space) {
+    if (c == ' ' && (i == 0 || prev_char_was_space)) {
       return false;
-    }
-
-    if (c == ' ' && (i == 0 || i == len - 1)) {
-      return false;
-    }
-
-    if (!first_char_seen && c != ' ') {
-      first_char_seen = true;
     }
 
     prev_char_was_space = (c == ' ');
   }
 
-  return first_char_seen;
+  return true;
 }
 
 bool validate_phone_number(const char *phone_number) {
