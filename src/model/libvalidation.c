@@ -1,10 +1,24 @@
+// Module : libvalidation.c
+// 
+// This module implements function
+// to validate the ID number,
+// Name, Phone number, Course
+// and Section
+//
+//Returns True if the data is valid
+//Returns False if invalid
+//
+
 #include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
 
+// Add constraint for max length of name 
 #define MAX_NAME_LENGTH 50
 
 bool validate_id_number(const char *id_number) {
+  // Function to validate ID Number
+
   int len = strlen(id_number);
 
   if (len != 11) {
@@ -22,8 +36,10 @@ bool validate_id_number(const char *id_number) {
 }
 
 bool validate_name(const char *name) {
+  // Function to Validate Name
   int len = strlen(name);
 
+  // Check if the name surpasses the constraint
   if (len > MAX_NAME_LENGTH) {
     return false;
   }
@@ -57,6 +73,8 @@ bool validate_name(const char *name) {
 }
 
 bool validate_phone_number(const char *phone_number) {
+  // Function to validate phone number
+
   int len = strlen(phone_number);
   if (len != 11) {
     return false;
@@ -76,6 +94,8 @@ bool validate_phone_number(const char *phone_number) {
 }
 
 bool validate_course(const char *course) {
+  // Function to validate course
+
   int len = strlen(course);
 
   if (len <= 2) {
@@ -95,6 +115,8 @@ bool validate_course(const char *course) {
 }
 
 bool validate_section(const char *section) {
+  // Function to validate section
+  
   int len = strlen(section);
   if (len != 1) {
     return false;
@@ -106,3 +128,11 @@ bool validate_section(const char *section) {
 
   return true;
 }
+
+//
+// No need of main function
+// Because file is directly 
+// Being called from validation.py
+// If ran seprately an error will be
+// shown due to missing main
+//

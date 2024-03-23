@@ -1,3 +1,16 @@
+
+"""
+Module : view.py
+
+This module is used to
+create the user interface.
+It is responsible for creating 
+diffrent tabs like check-in
+while also sending data to 
+backend for computation adn storage
+
+"""
+
 import os
 import tkinter as tk
 import webbrowser
@@ -8,10 +21,13 @@ import src.controller.validation as validation
 from CTkMessagebox import CTkMessagebox
 from PIL import Image, ImageTk
 
+# Get the current working dictionary
 path = os.getcwd()
 
 
 class MenuFrame(customtkinter.CTkFrame):
+    # Class to represent main menu frame
+
     def __init__(
         self,
         master,
@@ -25,6 +41,9 @@ class MenuFrame(customtkinter.CTkFrame):
         history,
         separator,
     ):
+        
+        """ Initialize and create MenuFrame Interface"""
+
         super().__init__(master)
 
         self.values = values
@@ -84,6 +103,8 @@ class MenuFrame(customtkinter.CTkFrame):
         self.show_frame(self.values[1])
 
     def show_frame(self, value):
+        """ Function to place the tabs on the screen"""
+
         self.active_users.grid_remove()
 
         self.sign_in.grid_remove()
@@ -120,6 +141,8 @@ class MenuFrame(customtkinter.CTkFrame):
             raise Exception("Not in the menu")
 
     def show_about(self):
+        """Display information related to signing out a user"""
+
         if self.about_window is None or not self.about_window.winfo_exists():
             self.about_window = AboutApplicationWindow(self)
         else:
@@ -127,7 +150,11 @@ class MenuFrame(customtkinter.CTkFrame):
 
 
 class ActiveUserFrame(customtkinter.CTkFrame):
+    """  Represents the frame for displaying active users """
+
     def __init__(self, master):
+        """ Initialize and Displays the ACtiveUserFrame widgets """
+
         super().__init__(master)
 
         self._border_color = "black"
@@ -184,7 +211,11 @@ class ActiveUserFrame(customtkinter.CTkFrame):
 
 
 class SignInFrame(customtkinter.CTkFrame):
+    """ Represents the users sign in frame """
+
     def __init__(self, master):
+        """ Initializes the SignInFrame and sets up the interface for signing in users """
+
         super().__init__(master)
 
         self._border_color = "black"
@@ -264,6 +295,8 @@ class SignInFrame(customtkinter.CTkFrame):
         pass
 
     def sign_up_popup(self):
+        """ Opens a popup window for signing up new users """
+        
         if (
             validation.validate_id(self.id_number.get())
             and validation.validate_name(self.student_name.get())
@@ -290,6 +323,8 @@ class SignInFrame(customtkinter.CTkFrame):
             )
 
     def get_equipment(self):
+        """ Opens a window for getting equipment after signing in """
+
         if (
             self.get_equipment_window is None
             or not self.get_equipment_window.winfo_exists()
@@ -300,7 +335,11 @@ class SignInFrame(customtkinter.CTkFrame):
 
 
 class SignOutFrame(customtkinter.CTkFrame):
+    """  Represents the frame for signing out users """
+
     def __init__(self, master):
+        """ Initializes the SignOutFrame and sets up the interface for signing out users """
+
         super().__init__(master)
 
         self._border_color = "black"
@@ -359,7 +398,11 @@ class SignOutFrame(customtkinter.CTkFrame):
 
 
 class AddEquipmentFrame(customtkinter.CTkFrame):
+    """  Represents the frame for managing equipment inventory. """
+
     def __init__(self, master):
+        """ Initializes the InventoryButtonsFrame and sets up the interface for managing inventory buttons."""
+
         super().__init__(master)
 
         self._border_color = "black"
@@ -425,7 +468,10 @@ class AddEquipmentFrame(customtkinter.CTkFrame):
 
 
 class InventoryButtonsFrame(customtkinter.CTkFrame):
+    """ Represents the frame for searching equipment in the inventory """
+
     def __init__(self, master):
+        """  Initializes the InventorySearchFrame and sets up the interface for searching equipment """
         super().__init__(master)
 
         self._border_color = "black"
@@ -482,7 +528,10 @@ class InventoryButtonsFrame(customtkinter.CTkFrame):
 
 
 class InventorySearchFrame(customtkinter.CTkFrame):
+    
+
     def __init__(self, master):
+        
         super().__init__(master)
 
         self._border_color = "black"
@@ -510,7 +559,11 @@ class InventorySearchFrame(customtkinter.CTkFrame):
 
 
 class HistoryFrame(customtkinter.CTkFrame):
+    """  Represents the frame for displaying sign-in and sign-out history """
+
     def __init__(self, master):
+        """ Initializes the HistoryFrame and sets up the interface for displaying history """
+        
         super().__init__(master)
 
         self._border_color = "black"
@@ -565,7 +618,11 @@ class HistoryFrame(customtkinter.CTkFrame):
 
 
 class Separator(customtkinter.CTkFrame):
+    """ Represents a separator between different sections of the user interface """
+
     def __init__(self, master):
+        """ Initializes the Separator with the provided master widget and sets up the separator line """
+
         super().__init__(master)
 
         line = customtkinter.CTkFrame(
@@ -579,7 +636,11 @@ class Separator(customtkinter.CTkFrame):
 
 
 class AboutApplicationWindow(customtkinter.CTkToplevel):
+    """  Represents the window for displaying information about the application """
+
     def __init__(self, master):
+        """ Initializes the AboutApplicationWindow and sets up the interface for displaying application information"""
+
         super().__init__(master)
         self.title("About Application")
         self.geometry("500x400")
@@ -663,7 +724,10 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
 
 
 class GetEquipmentWindow(customtkinter.CTkToplevel):
+    """ Represents the window for getting equipment after signing in """
+
     def __init__(self, master):
+        """ Initializes the GetEquipmentWindow and sets up the interface for getting equipment """
         super().__init__(master)
         self.title("Get Equipments")
         self.geometry("600x400")
@@ -675,7 +739,11 @@ class GetEquipmentWindow(customtkinter.CTkToplevel):
 
 
 class App(customtkinter.CTk):
+    """ Represents the main applicationRepresents the main application """
+
     def __init__(self):
+        """ Initializes the App and sets up the main user interface by creating instances of various frames and widgets """
+        
         super().__init__()
         self.title("PE Gear Manager")
         self.iconpath = ImageTk.PhotoImage(
