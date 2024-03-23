@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 """
 Module : view.py
@@ -12,22 +13,50 @@ backend for computation adn storage
 """
 
 import os
+=======
+"""
+Module : view.py
+This module is used to
+create the user interface.
+It is responsible for creating
+diffrent tabs like check-in
+while also sending data to
+backend for computation and storage
+"""
+
+>>>>>>> wip/2-database-handling
 import tkinter as tk
 import webbrowser
 from tkinter import ttk
+from pathlib import Path
 
 import customtkinter
-import src.controller.validation as validation
 from CTkMessagebox import CTkMessagebox
 from PIL import Image, ImageTk
 
+<<<<<<< HEAD
 # Get the current working dictionary
 path = os.getcwd()
+=======
+from src.controller import (
+    validate_id,
+    validate_name,
+    validate_phone_number,
+    validate_course,
+    validate_section,
+    insert_data
+)
+>>>>>>> wip/2-database-handling
 
+# Get the current working dictionary
+asset_dir = Path(__file__).parent.absolute()
 
 class MenuFrame(customtkinter.CTkFrame):
     # Class to represent main menu frame
+<<<<<<< HEAD
 
+=======
+>>>>>>> wip/2-database-handling
     def __init__(
         self,
         master,
@@ -41,9 +70,13 @@ class MenuFrame(customtkinter.CTkFrame):
         history,
         separator,
     ):
+<<<<<<< HEAD
         
         """ Initialize and create MenuFrame Interface"""
 
+=======
+        """ Initialize and create MenuFrame Interface"""
+>>>>>>> wip/2-database-handling
         super().__init__(master)
 
         self.values = values
@@ -59,7 +92,7 @@ class MenuFrame(customtkinter.CTkFrame):
         self.menus = []
 
         university_icon = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/school_logo.png")),
+            Image.open(asset_dir / "assets" / "school_logo.png"),
             size=(80, 80),
         )
         university_logo = customtkinter.CTkLabel(self, text="", image=university_icon)
@@ -104,7 +137,10 @@ class MenuFrame(customtkinter.CTkFrame):
 
     def show_frame(self, value):
         """ Function to place the tabs on the screen"""
+<<<<<<< HEAD
 
+=======
+>>>>>>> wip/2-database-handling
         self.active_users.grid_remove()
 
         self.sign_in.grid_remove()
@@ -142,7 +178,10 @@ class MenuFrame(customtkinter.CTkFrame):
 
     def show_about(self):
         """Display information related to signing out a user"""
+<<<<<<< HEAD
 
+=======
+>>>>>>> wip/2-database-handling
         if self.about_window is None or not self.about_window.winfo_exists():
             self.about_window = AboutApplicationWindow(self)
         else:
@@ -150,11 +189,17 @@ class MenuFrame(customtkinter.CTkFrame):
 
 
 class ActiveUserFrame(customtkinter.CTkFrame):
+<<<<<<< HEAD
     """  Represents the frame for displaying active users """
 
     def __init__(self, master):
         """ Initialize and Displays the ACtiveUserFrame widgets """
 
+=======
+    """ Represents the frame for displaying active users """
+    def __init__(self, master):
+        """ Initialize and Displays the ACtiveUserFrame widgets """
+>>>>>>> wip/2-database-handling
         super().__init__(master)
 
         self._border_color = "black"
@@ -211,7 +256,10 @@ class ActiveUserFrame(customtkinter.CTkFrame):
 
 
 class SignInFrame(customtkinter.CTkFrame):
+<<<<<<< HEAD
     """ Represents the users sign in frame """
+=======
+>>>>>>> wip/2-database-handling
 
     def __init__(self, master):
         """ Initializes the SignInFrame and sets up the interface for signing in users """
@@ -236,7 +284,11 @@ class SignInFrame(customtkinter.CTkFrame):
             self, text="Student Name", font=("Inter", 14, "bold")
         )
         name_label.grid(row=2, column=0, padx=20, pady=20, sticky="w")
+<<<<<<< HEAD
         self.student_name = customtkinter.CTkEntry(self, width=190)
+=======
+        self.student_name = customtkinter.CTkEntry(self, width=185)
+>>>>>>> wip/2-database-handling
         self.student_name.grid(row=2, column=1, padx=20, pady=20, sticky="w")
 
         number_label = customtkinter.CTkLabel(
@@ -298,12 +350,21 @@ class SignInFrame(customtkinter.CTkFrame):
         """ Opens a popup window for signing up new users """
         
         if (
-            validation.validate_id(self.id_number.get())
-            and validation.validate_name(self.student_name.get())
-            and validation.validate_phone_number(self.student_number.get())
-            and validation.validate_course(self.student_course.get())
-            and validation.validate_section(self.student_section.get())
+            validate_id(self.id_number.get())
+            and validate_name(self.student_name.get())
+            and validate_phone_number(self.student_number.get())
+            and validate_course(self.student_course.get())
+            and self.student_year.get()
+            and validate_section(self.student_section.get())
         ):
+            id = self.id_number.get()
+            name = self.student_name.get()
+            number = self.student_number.get()
+            course = self.student_course.get()
+            year = self.student_year.get()
+            section = self.student_section.get()
+            insert_data(id, name, number, course, year, section)
+
             CTkMessagebox(
                 title="Sign Up",
                 message="Successfuly Registered",
@@ -478,7 +539,7 @@ class InventoryButtonsFrame(customtkinter.CTkFrame):
         self._border_width = 1
 
         inventory_icon = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/inventory_image.png")),
+            Image.open(asset_dir / "assets" / "inventory_image.png"),
             size=(80, 80),
         )
         inventory_label = customtkinter.CTkLabel(self, text="", image=inventory_icon)
@@ -666,7 +727,7 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         )
 
         self.facebook_icon = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/facebook_icon.png")),
+            Image.open(asset_dir / "assets" / "facebook_icon.png"),
             size=(80, 80),
         )
         self.facebook_link = customtkinter.CTkLabel(
@@ -681,7 +742,7 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         )
 
         self.github_mark = customtkinter.CTkImage(
-            Image.open(os.path.join(path, "src/view/assets/github_mark.png")),
+            Image.open(asset_dir / "assets" / "github_mark.png"),
             size=(80, 80),
         )
         self.github_link = customtkinter.CTkLabel(
@@ -747,7 +808,7 @@ class App(customtkinter.CTk):
         super().__init__()
         self.title("PE Gear Manager")
         self.iconpath = ImageTk.PhotoImage(
-            file=os.path.join(path, "src/view/assets/icon.png")
+            file=asset_dir / "assets" / "icon.png"
         )
         self.wm_iconbitmap()
         self.iconphoto(False, self.iconpath)

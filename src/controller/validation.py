@@ -4,8 +4,13 @@ Module : validation.py
 
 validation.py is used to validate
 the from libvalidation.so.
+<<<<<<< HEAD
 It checks if the ID, name, 
 phone number, course and 
+=======
+It checks if the ID, name,
+phone number, course and
+>>>>>>> wip/2-database-handling
 section are valid or not
 
 """
@@ -21,7 +26,11 @@ library = ctypes.CDLL(os.path.join(path, "src/model/libvalidation.so"))
 # Check if the details are valid or not
 # Returns True if valid
 # Returns False if invalid
+<<<<<<< HEAD
 library.validate_id_number.argtypes = [ctypes.c_char_p] 
+=======
+library.validate_id_number.argtypes = [ctypes.c_char_p]
+>>>>>>> wip/2-database-handling
 library.validate_id_number.restype = ctypes.c_bool
 
 library.validate_name.argtypes = [ctypes.c_char_p]
