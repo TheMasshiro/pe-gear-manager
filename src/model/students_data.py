@@ -67,7 +67,16 @@ def delete_student(id):
 def id_exists(id):
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
-    cursor.execute("SELECT COUNT(*) FROM Items WHERE id = ?", (id,))
+    cursor.execute("SELECT COUNT(*) FROM Students WHERE id = ?", (id,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] > 0
+
+
+def name_exists(name):
+    conn = sqlite3.connect(database_file)
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM Students WHERE name = ?", (name,))
     result = cursor.fetchone()
     conn.close()
     return result[0] > 0
