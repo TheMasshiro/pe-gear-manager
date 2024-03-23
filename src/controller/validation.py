@@ -20,7 +20,7 @@ import os
 path = os.getcwd()
 
 # Load shared library libvalidation.so
-library = ctypes.CDLL(os.path.join(path, "src/model/libvalidation.so"))
+library = ctypes.CDLL(os.path.join(path, "utils/validation/libvalidation.so"))
 
 # Check if the details are valid or not
 # Returns True if valid
