@@ -198,7 +198,7 @@ class SignInFrame(customtkinter.CTkFrame):
             self, text="ID Number", font=("Inter", 14, "bold")
         )
         id_label.grid(row=1, column=0, padx=20, pady=20, sticky="w")
-        self.id_number = customtkinter.CTkEntry(self, width=110)
+        self.id_number = customtkinter.CTkEntry(self, width=120)
         self.id_number.grid(row=1, column=1, padx=20, pady=20, sticky="w")
 
         name_label = customtkinter.CTkLabel(
