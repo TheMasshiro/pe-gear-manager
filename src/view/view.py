@@ -4,7 +4,13 @@ import webbrowser
 from tkinter import ttk
 
 import customtkinter
-import src.controller.validation as validation
+from src.controller import (
+    validate_id,
+    validate_name,
+    validate_phone_number,
+    validate_course,
+    validate_section,
+)
 from CTkMessagebox import CTkMessagebox
 from PIL import Image, ImageTk
 
@@ -205,7 +211,7 @@ class SignInFrame(customtkinter.CTkFrame):
             self, text="Student Name", font=("Inter", 14, "bold")
         )
         name_label.grid(row=2, column=0, padx=20, pady=20, sticky="w")
-        self.student_name = customtkinter.CTkEntry(self, width=170)
+        self.student_name = customtkinter.CTkEntry(self, width=185)
         self.student_name.grid(row=2, column=1, padx=20, pady=20, sticky="w")
 
         number_label = customtkinter.CTkLabel(
@@ -265,11 +271,11 @@ class SignInFrame(customtkinter.CTkFrame):
 
     def sign_up_popup(self):
         if (
-            validation.validate_id(self.id_number.get())
-            and validation.validate_name(self.student_name.get())
-            and validation.validate_phone_number(self.student_number.get())
-            and validation.validate_course(self.student_course.get())
-            and validation.validate_section(self.student_section.get())
+            validate_id(self.id_number.get())
+            and validate_name(self.student_name.get())
+            and validate_phone_number(self.student_number.get())
+            and validate_course(self.student_course.get())
+            and validate_section(self.student_section.get())
         ):
             CTkMessagebox(
                 title="Sign Up",

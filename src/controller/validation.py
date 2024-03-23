@@ -2,7 +2,7 @@ import ctypes
 import os
 
 path = os.getcwd()
-library = ctypes.CDLL(os.path.join(path, "src/model/libvalidation.so"))
+library = ctypes.CDLL(os.path.join(path, "utils/validation/libvalidation.so"))
 
 library.validate_id_number.argtypes = [ctypes.c_char_p]
 library.validate_id_number.restype = ctypes.c_bool
