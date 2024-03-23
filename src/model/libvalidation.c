@@ -28,23 +28,32 @@ bool validate_name(const char *name) {
     return false;
   }
 
+  bool first_char_seen = false;
   bool prev_char_was_space = false;
 
-  for (int i = 0; i < len; ++i) {
+  for (int i = 0; i < len; i++) {
     char c = name[i];
 
     if (!isalpha(c) && c != ' ') {
       return false;
     }
 
-    if (c == ' ' && (i == 0 || prev_char_was_space)) {
+    if (c == ' ' && prev_char_was_space) {
       return false;
+    }
+
+    if (c == ' ' && (i == 0 || i == len - 1)) {
+      return false;
+    }
+
+    if (!first_char_seen && c != ' ') {
+      first_char_seen = true;
     }
 
     prev_char_was_space = (c == ' ');
   }
 
-  return true;
+  return first_char_seen;
 }
 
 bool validate_phone_number(const char *phone_number) {
