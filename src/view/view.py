@@ -264,9 +264,13 @@ class SignInFrame(customtkinter.CTkFrame):
         pass
 
     def sign_up_popup(self):
-        if validation.validate_id(
-            self.id_number.get()
-        ) and validation.validate_phone_number(self.student_number.get()):
+        if (
+            validation.validate_id(self.id_number.get())
+            and validation.validate_name(self.student_name.get())
+            and validation.validate_phone_number(self.student_number.get())
+            and validation.validate_course(self.student_course.get())
+            and validation.validate_section(self.student_section.get())
+        ):
             CTkMessagebox(
                 title="Sign Up",
                 message="Successfuly Registered",
