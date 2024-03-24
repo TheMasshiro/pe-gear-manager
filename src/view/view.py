@@ -1,11 +1,14 @@
 """
+
 Module : view.py
+
 This module is used to
 create the user interface.
 It is responsible for creating
 diffrent tabs like check-in
 while also sending data to
 backend for computation and storage
+
 """
 
 import tkinter as tk
