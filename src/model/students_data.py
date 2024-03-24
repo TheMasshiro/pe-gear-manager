@@ -12,8 +12,8 @@ and check if a student ID or name already exists in the database.
 import sqlite3
 from pathlib import Path
 
-script_dir = Path(__file__).parent.absolute()
-database_file = script_dir / "data" / "students.db"
+file_dir = Path(__file__).parent.absolute()
+database_file = file_dir / "data" / "students.db"
 
 
 def create_table():
@@ -37,7 +37,7 @@ def create_table():
     conn.close()
 
 
-def fetch_student():
+def fetch_students():
     # Retrieve all student records from the database
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
@@ -80,7 +80,7 @@ def delete_student(id):
     conn.close()
 
 
-def id_exists(id):
+def student_id_exists(id):
     # Check if a student id already exists in the table
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
@@ -90,7 +90,7 @@ def id_exists(id):
     return result[0] > 0
 
 
-def name_exists(name):
+def student_name_exists(name):
     # Check if a student name already exists in the table
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
