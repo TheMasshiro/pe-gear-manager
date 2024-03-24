@@ -8,15 +8,12 @@
 //
 // Returns True if the data is valid
 // Returns False if invalid
-// Returns True if the data is valid
-// Returns False if invalid
 //
 
 #include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
 
-// Add constraint for max length of name
 // Add constraint for max length of name
 #define MAX_NAME_LENGTH 50
 
@@ -132,7 +129,6 @@ bool validate_section(const char *section) {
 
 //
 // No need of main function
-// Because file is directly
 // Because file is directly
 // Being called from validation.py
 // If ran seprately an error will be
