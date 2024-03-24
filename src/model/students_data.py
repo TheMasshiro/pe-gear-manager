@@ -1,3 +1,14 @@
+"""
+
+Module : student_data.py
+
+This module handles data manipulation operations for the student database.
+It provides functions to create the database table, fetch student records,
+insert new student records, update existing records, delete records,
+and check if a student ID or name already exists in the database.
+
+"""
+
 import sqlite3
 from pathlib import Path
 
@@ -6,6 +17,7 @@ database_file = script_dir / "data" / "students.db"
 
 
 def create_table():
+    # Create the Students table in the database if it doesn't already exist
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
     cursor.execute(
@@ -26,6 +38,7 @@ def create_table():
 
 
 def fetch_student():
+    # Retrieve all student records from the database
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Students")
@@ -35,6 +48,7 @@ def fetch_student():
 
 
 def insert_student(id, name, number, course, year, section):
+    # Insert a new student record into the database
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
     cursor.execute(
@@ -46,6 +60,7 @@ def insert_student(id, name, number, course, year, section):
 
 
 def update_student(new_name, new_number, new_course, new_year, new_section):
+    # Update an existing student record in the database
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
     cursor.execute(
@@ -57,6 +72,7 @@ def update_student(new_name, new_number, new_course, new_year, new_section):
 
 
 def delete_student(id):
+    # Delete a student record from the database
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
     cursor.execute("DELETE FROM Students WHERE id = ?", (id,))
@@ -65,6 +81,7 @@ def delete_student(id):
 
 
 def id_exists(id):
+    # Check if a student id already exists in the table
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM Students WHERE id = ?", (id,))
@@ -74,6 +91,7 @@ def id_exists(id):
 
 
 def name_exists(name):
+    # Check if a student name already exists in the table
     conn = sqlite3.connect(database_file)
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM Students WHERE name = ?", (name,))
