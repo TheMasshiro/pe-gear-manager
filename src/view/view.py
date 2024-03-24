@@ -20,14 +20,18 @@ from pathlib import Path
 from CTkMessagebox import CTkMessagebox
 from PIL import Image, ImageTk
 from src.controller import (
+    generate_frames,
     validate_id,
     validate_name,
     validate_phone_number,
     validate_course,
     validate_section,
-    insert_data,
-    id_data_exists,
-    name_data_exists,
+    student_id_record,
+    student_name_record,
+    autofill_helper_fill,
+    autofill_helper_clear,
+    sign_up_insert_data,
+    student_tree_helper,
 )
 
 # Get the current working dictionary
@@ -108,42 +112,20 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.show_frame(self.values[1])
 
+
     def show_frame(self, value):
         """Function to place the tabs on the screen"""
-        self.active_users.grid_remove()
-
-        self.sign_in.grid_remove()
-        self.sign_out.grid_remove()
-
-        self.add_equipment.grid_remove()
-        self.inventory_buttons.grid_remove()
-        self.inventory_search.grid_remove()
-
-        self.history.grid_remove()
-
-        if value == "Active Users":
-            self.active_users.grid(row=0, column=0, padx=(200, 20), pady=30, sticky="n")
-            self.separator.grid(row=0, column=0, padx=(0, 960), pady=0, sticky="n")
-        elif value == "Sign In/Out":
-            self.sign_in.grid(row=0, column=0, padx=(225, 10), pady=30, sticky="n")
-            self.sign_out.grid(row=0, column=1, padx=(10, 70), pady=30, sticky="n")
-            self.separator.grid(row=0, column=0, padx=(0, 290), pady=0, sticky="n")
-        elif value == "Add Equipments":
-            self.add_equipment.grid(
-                row=0, column=0, padx=(235, 10), pady=30, sticky="n"
-            )
-            self.inventory_buttons.grid(
-                row=0, column=1, padx=(30, 200), pady=(70, 100), sticky="s"
-            )
-            self.inventory_search.grid(
-                row=0, column=1, padx=(30, 200), pady=(30, 100), sticky="n"
-            )
-            self.separator.grid(row=0, column=0, padx=(0, 370), pady=0, sticky="n")
-        elif value == "Return History":
-            self.history.grid(row=0, column=0, padx=(200, 20), pady=30, sticky="n")
-            self.separator.grid(row=0, column=0, padx=(0, 960), pady=0, sticky="n")
-        else:
-            raise Exception("Not in the menu")
+        generate_frames(
+            self.active_users,
+            self.sign_in,
+            self.sign_out,
+            self.add_equipment,
+            self.inventory_buttons,
+            self.inventory_search,
+            self.history,
+            self.separator,
+            value,
+        )
 
     def show_about(self):
         """Display information related to signing out a user"""
@@ -155,8 +137,6 @@ class MenuFrame(customtkinter.CTkFrame):
 
 class ActiveUserFrame(customtkinter.CTkFrame):
     """Represents the frame for displaying active users"""
-
-    """ Represents the frame for displaying active users """
 
     def __init__(self, master):
         """Initialize and Displays the ACtiveUserFrame widgets"""
@@ -179,7 +159,7 @@ class ActiveUserFrame(customtkinter.CTkFrame):
         style.theme_use("default")
         style.configure(
             "Treeview",
-            font=("Inter", 10),
+            font=("Inter", 11),
             background="#eeeeee",
             foreground="black",
             lrowheight=25,
@@ -197,22 +177,25 @@ class ActiveUserFrame(customtkinter.CTkFrame):
         )
         style.map("Treeview.Heading", background=[("active", "#cccccc")])
 
-        tree = ttk.Treeview(self, height=23)
+        self.tree = ttk.Treeview(self, height=23)
 
-        tree["columns"] = ("Student ID", "Name", "Course", "Sign In Time")
+        self.tree["columns"] = ("Student ID", "Name", "Course", "Sign In Time")
 
-        tree.column("#0", width=0, stretch=tk.NO)
-        tree.column("Student ID", anchor=tk.CENTER, width=200)
-        tree.column("Name", anchor=tk.CENTER, width=200)
-        tree.column("Course", anchor=tk.CENTER, width=200)
-        tree.column("Sign In Time", anchor=tk.CENTER, width=200)
+        self.tree.column("#0", width=0, stretch=tk.NO)
+        self.tree.column("Student ID", anchor=tk.CENTER, width=200)
+        self.tree.column("Name", anchor=tk.CENTER, width=200)
+        self.tree.column("Course", anchor=tk.CENTER, width=200)
+        self.tree.column("Sign In Time", anchor=tk.CENTER, width=200)
 
-        tree.heading("Student ID", text="Student ID")
-        tree.heading("Name", text="Name")
-        tree.heading("Course", text="Course")
-        tree.heading("Sign In Time", text="Sign In Time")
+        self.tree.heading("Student ID", text="Student ID")
+        self.tree.heading("Name", text="Name")
+        self.tree.heading("Course", text="Course")
+        self.tree.heading("Sign In Time", text="Sign In Time")
 
-        tree.grid(row=1, column=0, padx=20, pady=20, sticky="n")
+        self.tree.grid(row=1, column=0, padx=20, pady=20, sticky="n")
+
+    def add_active_students(self):
+        student_tree_helper(self.tree)
 
 
 class SignInFrame(customtkinter.CTkFrame):
@@ -235,6 +218,7 @@ class SignInFrame(customtkinter.CTkFrame):
         )
         id_label.grid(row=1, column=0, padx=20, pady=20, sticky="w")
         self.id_number = customtkinter.CTkEntry(self, width=120)
+        self.id_number.bind("<Return>", self.autofill_entries)
         self.id_number.grid(row=1, column=1, padx=20, pady=20, sticky="w")
 
         name_label = customtkinter.CTkLabel(
@@ -249,7 +233,7 @@ class SignInFrame(customtkinter.CTkFrame):
             self, text="Phone Number", font=("Inter", 14, "bold")
         )
         number_label.grid(row=3, column=0, padx=20, pady=20, sticky="w")
-        self.student_number = customtkinter.CTkEntry(self, width=120)
+        self.student_number = customtkinter.CTkEntry(self, width=140)
         self.student_number.grid(row=3, column=1, padx=20, pady=20, sticky="w")
 
         course_label = customtkinter.CTkLabel(
@@ -264,7 +248,7 @@ class SignInFrame(customtkinter.CTkFrame):
         )
         year_label.grid(row=5, column=0, padx=20, pady=20, sticky="w")
         self.student_year = customtkinter.CTkOptionMenu(
-            self, values=["1st-Year", "2nd-Year", "3rd-Year", "4th-Year"], width=110
+            self, values=["1", "2", "3", "4"], width=60
         )
         self.student_year.grid(row=5, column=1, padx=20, pady=20, sticky="w")
 
@@ -279,7 +263,7 @@ class SignInFrame(customtkinter.CTkFrame):
         blank_label.grid(row=7, column=0, padx=20, pady=20, sticky="w")
 
         sign_in_button = customtkinter.CTkButton(
-            self, text="Sign In", font=("Inter", 15, "bold"), command=self.get_equipment
+            self, text="Sign In", font=("Inter", 15, "bold"), command=self.sign_in_popup
         )
         sign_in_button.grid(
             row=8, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="ns"
@@ -297,8 +281,56 @@ class SignInFrame(customtkinter.CTkFrame):
             row=9, column=0, columnspan=2, padx=20, pady=(10, 20), sticky="ns"
         )
 
+    def autofill_entries(self, event):
+        """Autofill the entry fields in the sign up frame"""
+        if event.widget:
+            if student_id_record(self.id_number.get()):
+                autofill_helper_fill(
+                    self.id_number,
+                    self.student_name,
+                    self.student_number,
+                    self.student_course,
+                    self.student_year,
+                    self.student_section,
+                    tk,
+                )
+            else:
+                autofill_helper_clear(
+                    self.id_number,
+                    self.student_name,
+                    self.student_number,
+                    self.student_course,
+                    self.student_year,
+                    self.student_section,
+                    tk,
+                )
+                CTkMessagebox(
+                    title="No Student Found",
+                    message="No student found in record, please sign up first.",
+                    icon="cancel",
+                    option_1="OK",
+                    justify="center",
+                    corner_radius=10,
+                )
+
     def sign_in_popup(self):
-        pass
+        if student_id_record(self.id_number.get()) and student_name_record(
+            self.student_name.get()
+        ):
+            print("Hello, World")
+            ActiveUserFrame(self).add_active_students()
+            SignOutFrame(self).add_to_sign_out()
+            autofill_helper_clear(
+                self.id_number,
+                self.student_name,
+                self.student_number,
+                self.student_course,
+                self.student_year,
+                self.student_section,
+                tk,
+            )
+        else:
+            print("No hello received")
 
     def sign_up_popup(self):
         """Opens a popup window for signing up new users"""
@@ -319,7 +351,7 @@ class SignInFrame(customtkinter.CTkFrame):
                 justify="center",
                 corner_radius=10,
             )
-        elif id_data_exists(self.id_number.get()) or name_data_exists(
+        elif student_id_record(self.id_number.get()) or student_name_record(
             self.student_name.get()
         ):
             CTkMessagebox(
@@ -331,13 +363,14 @@ class SignInFrame(customtkinter.CTkFrame):
                 corner_radius=10,
             )
         else:
-            id = self.id_number.get()
-            name = self.student_name.get().title()
-            number = self.student_number.get()
-            course = self.student_course.get().upper()
-            year = self.student_year.get()
-            section = self.student_section.get().upper()
-            insert_data(id, name, number, course, year, section)
+            sign_up_insert_data(
+                self.id_number,
+                self.student_name,
+                self.student_number,
+                self.student_course,
+                self.student_year,
+                self.student_section,
+            )
             CTkMessagebox(
                 title="Sign Up",
                 message="Successfuly Registered",
@@ -345,6 +378,15 @@ class SignInFrame(customtkinter.CTkFrame):
                 option_1="OK",
                 justify="center",
                 corner_radius=10,
+            )
+            autofill_helper_clear(
+                self.id_number,
+                self.student_name,
+                self.student_number,
+                self.student_course,
+                self.student_year,
+                self.student_section,
+                tk,
             )
 
     def get_equipment(self):
@@ -397,22 +439,22 @@ class SignOutFrame(customtkinter.CTkFrame):
         )
         style.map("Treeview.Heading", background=[("active", "#cccccc")])
 
-        tree = ttk.Treeview(self, height=21)
+        self.sign_out_tree = ttk.Treeview(self, height=21)
 
-        tree["columns"] = ("Student ID", "Name", "Course", "Sign In Time")
+        self.sign_out_tree["columns"] = ("Student ID", "Name", "Course", "Sign In Time")
 
-        tree.column("#0", width=0, stretch=tk.NO)
-        tree.column("Student ID", anchor=tk.CENTER, width=130)
-        tree.column("Name", anchor=tk.CENTER, width=170)
-        tree.column("Course", anchor=tk.CENTER, width=100)
-        tree.column("Sign In Time", anchor=tk.CENTER, width=150)
+        self.sign_out_tree.column("#0", width=0, stretch=tk.NO)
+        self.sign_out_tree.column("Student ID", anchor=tk.CENTER, width=130)
+        self.sign_out_tree.column("Name", anchor=tk.CENTER, width=170)
+        self.sign_out_tree.column("Course", anchor=tk.CENTER, width=100)
+        self.sign_out_tree.column("Sign In Time", anchor=tk.CENTER, width=150)
 
-        tree.heading("Student ID", text="Student ID")
-        tree.heading("Name", text="Name")
-        tree.heading("Course", text="Course")
-        tree.heading("Sign In Time", text="Sign In Time")
+        self.sign_out_tree.heading("Student ID", text="Student ID")
+        self.sign_out_tree.heading("Name", text="Name")
+        self.sign_out_tree.heading("Course", text="Course")
+        self.sign_out_tree.heading("Sign In Time", text="Sign In Time")
 
-        tree.grid(row=1, column=0, padx=20, pady=20, sticky="n")
+        self.sign_out_tree.grid(row=1, column=0, padx=20, pady=20, sticky="n")
 
         sign_out_button = customtkinter.CTkButton(
             self, text="Sign Out", font=("Inter", 15, "bold")
@@ -420,6 +462,10 @@ class SignOutFrame(customtkinter.CTkFrame):
         sign_out_button.grid(
             row=2, column=0, columnspan=2, padx=20, pady=20, sticky="ns"
         )
+
+    def add_to_sign_out(self):
+        print("Hello from signout")
+        student_tree_helper(self.sign_out_tree)
 
 
 class AddEquipmentFrame(customtkinter.CTkFrame):
@@ -656,7 +702,7 @@ class Separator(customtkinter.CTkFrame):
             border_width=1,
             border_color="black",
         )
-        line.grid(row=0, column=0, sticky="w")
+        line.grid(row=0, column=0, sticky="nsew")
 
 
 class AboutApplicationWindow(customtkinter.CTkToplevel):
@@ -701,7 +747,7 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         )
         self.facebook_link.bind(
             "<Button-1>",
-            lambda e: self.open_link("https://www.facebook.com/Inchan.Vi/"),
+            lambda _: self.open_link("https://www.facebook.com/Inchan.Vi/"),
         )
 
         self.github_mark = customtkinter.CTkImage(
@@ -713,7 +759,7 @@ class AboutApplicationWindow(customtkinter.CTkToplevel):
         )
         self.github_link.grid(row=2, column=2, padx=(0, 70), pady=(10, 10), sticky="ne")
         self.github_link.bind(
-            "<Button-1>", lambda e: self.open_link("https://github.com/TheMasshiro")
+            "<Button-1>", lambda _: self.open_link("https://github.com/TheMasshiro")
         )
 
         self.facebook_label = customtkinter.CTkLabel(
