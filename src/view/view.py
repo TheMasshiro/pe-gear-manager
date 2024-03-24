@@ -702,7 +702,7 @@ class Separator(customtkinter.CTkFrame):
             border_width=1,
             border_color="black",
         )
-        line.grid(row=0, column=0, sticky="nsew")
+        line.grid(row=0, column=0, sticky="w")
 
 
 class AboutApplicationWindow(customtkinter.CTkToplevel):
