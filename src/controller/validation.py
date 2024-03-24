@@ -6,9 +6,6 @@ validation.py is used to validate
 the from libvalidation.so.
 It checks if the ID, name,
 phone number, course and
-It checks if the ID, name,
-phone number, course and
->>>>>>> wip/2-database-handling
 section are valid or not
 
 """
