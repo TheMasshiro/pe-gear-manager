@@ -225,7 +225,6 @@ class SignInFrame(customtkinter.CTkFrame):
             self, text="Student Name", font=("Inter", 14, "bold")
         )
         name_label.grid(row=2, column=0, padx=20, pady=20, sticky="w")
-        self.student_name = customtkinter.CTkEntry(self, width=190)
         self.student_name = customtkinter.CTkEntry(self, width=185)
         self.student_name.grid(row=2, column=1, padx=20, pady=20, sticky="w")
 
