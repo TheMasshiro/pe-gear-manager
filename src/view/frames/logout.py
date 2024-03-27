@@ -18,12 +18,12 @@ class Logout(customtkinter.CTkFrame):
         logout_button = customtkinter.CTkButton(
             self, text="Logout", font=button_font
         )
-        logout_button.grid(row=3, column=0, pady=20, sticky="s")
+        logout_button.grid(row=3, column=0, pady=(10,20), sticky="s")
 
         status_button = customtkinter.CTkButton(
             self, text="Check Status", font=button_font
         )
-        status_button.grid(row=2, column=0, pady=20, sticky="s")
+        status_button.grid(row=2, column=0, pady=(20,10), sticky="s")
 
 
         style = ttk.Style()
@@ -63,4 +63,4 @@ class Logout(customtkinter.CTkFrame):
         self.users_tree.heading("Course", text="Course")
         self.users_tree.heading("Sign In Time", text="Sign In Time")
 
-        self.users_tree.grid(row=1, column=0, padx=20, sticky="we")
+        self.users_tree.grid(row=1, column=0, padx=30, sticky="we")

@@ -23,10 +23,10 @@ class Login(customtkinter.CTkFrame):
         sign_in_label.grid(row=0, column=0, columnspan=2, padx=30, pady=(30, 50), sticky="n")
 
         id_label = customtkinter.CTkLabel(
-            sign_in_frame, text="ID Number", font=label_font
+                sign_in_frame, text="ID Number:", font=label_font
         )
         id_label.grid(row=1, column=0, padx=30, pady=30, sticky="we")
-        self.id_number = customtkinter.CTkEntry(sign_in_frame, justify="center", width=120)
+        self.id_number = customtkinter.CTkEntry(sign_in_frame, justify="center")
         # TODO add the enter button function
         self.id_number.grid(row=1, column=1, padx=30, pady=30, sticky="we")
 

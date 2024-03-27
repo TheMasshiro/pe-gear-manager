@@ -42,7 +42,6 @@ class MenuFrame(customtkinter.CTkFrame):
                 text=value,
                 font=menu_font,
                 border_spacing=10,
-                corner_radius = 0,
                 fg_color="transparent",
                 height=50,
                 text_color=("gray10", "gray90"),

@@ -15,10 +15,10 @@ class History(customtkinter.CTkFrame):
         label = customtkinter.CTkLabel(self, text="History", font=title_font)
         label.grid(row=0, column=0, padx=20, pady=20, sticky="n")
 
-        status_button = customtkinter.CTkButton(
+        history_button = customtkinter.CTkButton(
             self, text="Check History", font=button_font
         )
-        status_button.grid(row=2, column=0, padx=20, pady=20, sticky="s")
+        history_button.grid(row=2, column=0, padx=30, pady=20, sticky="s")
 
         style = ttk.Style()
         style.theme_use("default")
@@ -57,4 +57,4 @@ class History(customtkinter.CTkFrame):
         tree.heading("Course", text="Course")
         tree.heading("Sign Out Time", text="Sign Out Time")
 
-        tree.grid(row=1, column=0, padx=20, sticky="nswe")
+        tree.grid(row=1, column=0, padx=30, sticky="nswe")
