@@ -118,7 +118,7 @@ class Equipments(customtkinter.CTkFrame):
         )
         quantity_label.grid(row=3, column=0, padx=20, pady=20, sticky="e")
 
-        quantity_entry = customtkinter.CTkEntry(add_equipment, width=150)
+        quantity_entry = customtkinter.CTkEntry(add_equipment, justify="center", width=80)
         quantity_entry.grid(row=3, column=1, padx=(20, 30), pady=20, sticky="w")
 
         add_button = customtkinter.CTkButton(
