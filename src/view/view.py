@@ -37,19 +37,28 @@ class MenuFrame(customtkinter.CTkFrame):
         university_logo = customtkinter.CTkLabel(self, text="", image=university_icon)
         university_logo.grid(row=0, column=0, padx=30, pady=30, sticky="nwe")
 
-
-        login_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "login.png"))
-        logout_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "logout.png"))
-        equipments_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "equipment_data.png"))
-        students_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "students_data.png"))
-        history_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "return_history.png"))
+        login_icon = customtkinter.CTkImage(
+            Image.open(asset_dir / "assets" / "menu_icons" / "login.png")
+        )
+        logout_icon = customtkinter.CTkImage(
+            Image.open(asset_dir / "assets" / "menu_icons" / "logout.png")
+        )
+        equipments_icon = customtkinter.CTkImage(
+            Image.open(asset_dir / "assets" / "menu_icons" / "equipment_data.png")
+        )
+        students_icon = customtkinter.CTkImage(
+            Image.open(asset_dir / "assets" / "menu_icons" / "students_data.png")
+        )
+        history_icon = customtkinter.CTkImage(
+            Image.open(asset_dir / "assets" / "menu_icons" / "return_history.png")
+        )
         icon_mapping = {
-    "Student Login": login_icon,
-    "Student Logout": logout_icon,
-    "Manage Equipments": equipments_icon,
-    "Manage Students": students_icon,
-    "Return History": history_icon,
-}
+            "Student Login": login_icon,
+            "Student Logout": logout_icon,
+            "Manage Equipments": equipments_icon,
+            "Manage Students": students_icon,
+            "Return History": history_icon,
+        }
         for i, value in enumerate(self.values):
             icon = icon_mapping.get(value, None)
             self.menu = customtkinter.CTkButton(
