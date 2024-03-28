@@ -2,12 +2,14 @@ def generate_frames(
     login,
     logout,
     equipments,
+    students,
     history,
     value,
 ):
     login.grid_remove()
     logout.grid_remove()
     equipments.grid_remove()
+    students.grid_remove()
     history.grid_remove()
 
     if value == "Student Login":
@@ -16,6 +18,8 @@ def generate_frames(
         logout.grid(row=0, column=0, sticky="nswe")
     elif value == "Manage Equipments":
         equipments.grid(row=0, column=0, sticky="nswe")
+    elif value == "Manage Students":
+        students.grid(row=0, column=0, sticky="nswe")
     elif value == "Return History":
         history.grid(row=0, column=0, sticky="nswe")
     else:
