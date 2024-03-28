@@ -15,16 +15,13 @@ class Logout(customtkinter.CTkFrame):
         label = customtkinter.CTkLabel(self, text="Student Logout", font=title_font)
         label.grid(row=0, column=0, pady=20, sticky="n")
 
-        logout_button = customtkinter.CTkButton(
-            self, text="Logout", font=button_font
-        )
-        logout_button.grid(row=3, column=0, pady=(10,20), sticky="s")
+        logout_button = customtkinter.CTkButton(self, text="Logout", font=button_font)
+        logout_button.grid(row=3, column=0, pady=(10, 20), sticky="s")
 
         status_button = customtkinter.CTkButton(
             self, text="Check Status", font=button_font
         )
-        status_button.grid(row=2, column=0, pady=(20,10), sticky="s")
-
+        status_button.grid(row=2, column=0, pady=(20, 10), sticky="s")
 
         style = ttk.Style()
         style.theme_use("default")

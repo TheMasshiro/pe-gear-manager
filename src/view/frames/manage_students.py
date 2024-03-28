@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 from ..fonts import title_font, label_font, button_font
 
+
 class Students(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
@@ -12,38 +13,50 @@ class Students(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
 
         student_tree = customtkinter.CTkFrame(self)
-        student_tree.grid_columnconfigure((0,1,2,3), weight=1)
-        student_tree.grid_rowconfigure((0,1,2), weight=1)
+        student_tree.grid_columnconfigure((0, 1, 2, 3), weight=1)
+        student_tree.grid_rowconfigure((0, 1, 2), weight=1)
         student_tree.grid(row=0, column=0, sticky="nswe")
 
-        student_label = customtkinter.CTkLabel(student_tree, text="Manage Students", font=title_font)
-        student_label.grid(row=0, column=0, columnspan=4, padx=30, pady=(30, 50), sticky="n")
-
-        sort_label = customtkinter.CTkLabel(
-            student_tree, text="Sort:", font=label_font
+        student_label = customtkinter.CTkLabel(
+            student_tree, text="Manage Students", font=title_font
         )
+        student_label.grid(
+            row=0, column=0, columnspan=4, padx=30, pady=(30, 50), sticky="n"
+        )
+
+        sort_label = customtkinter.CTkLabel(student_tree, text="Sort:", font=label_font)
         sort_label.grid(row=1, column=0, padx=5, pady=(20, 0), sticky="e")
 
         self.sort_text = ["Name", "Course", "Date"]
         self.sort_index = 0
-        self.sort_button = customtkinter.CTkButton(student_tree,
-                                           text=self.sort_text[self.sort_index],
-                                           font=button_font, width=80,
-                                           command=self.sort_command)
-        self.sort_button.grid(row=1, column=1, padx=(5, 0), pady=(20,0), sticky="w")
+        self.sort_button = customtkinter.CTkButton(
+            student_tree,
+            text=self.sort_text[self.sort_index],
+            font=button_font,
+            width=80,
+            command=self.sort_command,
+        )
+        self.sort_button.grid(row=1, column=1, padx=(5, 0), pady=(20, 0), sticky="w")
 
         self.order_text = ["↑", "↓"]
         self.order_index = 0
-        self.order_button = customtkinter.CTkButton(student_tree,
-                                           text=self.order_text[self.order_index],
-                                           font=button_font, width=30,
-                                           command=self.order_command)
-        self.order_button.grid(row=1, column=1, padx=(90, 0), pady=(20,0), sticky="w")
+        self.order_button = customtkinter.CTkButton(
+            student_tree,
+            text=self.order_text[self.order_index],
+            font=button_font,
+            width=30,
+            command=self.order_command,
+        )
+        self.order_button.grid(row=1, column=1, padx=(90, 0), pady=(20, 0), sticky="w")
 
-        search_label = customtkinter.CTkLabel(student_tree, text="Search:", font=label_font)
-        search_label.grid(row=1, column=2, padx=5, pady=(20,0), sticky="e")
-        search_entry = customtkinter.CTkEntry(student_tree, placeholder_text="Student ID")
-        search_entry.grid(row=1, column=3, padx=5, pady=(20,0), sticky="w")
+        search_label = customtkinter.CTkLabel(
+            student_tree, text="Search:", font=label_font
+        )
+        search_label.grid(row=1, column=2, padx=5, pady=(20, 0), sticky="e")
+        search_entry = customtkinter.CTkEntry(
+            student_tree, placeholder_text="Student ID"
+        )
+        search_entry.grid(row=1, column=3, padx=5, pady=(20, 0), sticky="w")
 
         style = ttk.Style()
         style.theme_use("default")
@@ -69,7 +82,13 @@ class Students(customtkinter.CTkFrame):
 
         tree = ttk.Treeview(student_tree, height=20)
 
-        tree["columns"] = ("Student ID", "Name", "Course", "Phone Number", "Date Created")
+        tree["columns"] = (
+            "Student ID",
+            "Name",
+            "Course",
+            "Phone Number",
+            "Date Created",
+        )
 
         tree.column("#0", width=0, stretch=tk.NO)
         tree.column("Student ID", anchor=tk.CENTER, width=120)
@@ -88,7 +107,7 @@ class Students(customtkinter.CTkFrame):
 
         students_command = customtkinter.CTkFrame(self)
         students_command.grid_columnconfigure(0, weight=1)
-        students_command.grid_rowconfigure((0,1,2,3), weight=1)
+        students_command.grid_rowconfigure((0, 1, 2, 3), weight=1)
         students_command.grid(row=0, column=1, sticky="we")
 
         view_button = customtkinter.CTkButton(students_command, text="View Details")
@@ -97,8 +116,9 @@ class Students(customtkinter.CTkFrame):
         edit_button = customtkinter.CTkButton(students_command, text="Edit")
         edit_button.grid(row=1, column=0, padx=20, pady=20, sticky="ns")
 
-
-        export_button = customtkinter.CTkButton(students_command, text="Export to Excel")
+        export_button = customtkinter.CTkButton(
+            students_command, text="Export to Excel"
+        )
         export_button.grid(row=2, column=0, padx=20, pady=20, sticky="ns")
 
         delete_button = customtkinter.CTkButton(students_command, text="Delete")

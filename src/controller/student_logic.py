@@ -6,6 +6,7 @@ This module acts as an intermediary between the view.py and student_data.py modu
 It handles the data flow and operations related to student information.
 
 """
+
 from tkinter.constants import END
 from datetime import datetime
 from src.model import (
@@ -68,7 +69,8 @@ def autofill_helper_clear(
     student_section.delete(0, tk.END)
 
 
-def sign_up_insert_data(id_number,
+def sign_up_insert_data(
+    id_number,
     student_name,
     student_number,
     student_course,
@@ -89,6 +91,6 @@ def student_tree_helper(tree):
     time_now = datetime.now()
     sign_in_time = time_now.strftime("%I:%M %p")
     tree.delete(*tree.get_children())
-    for row in  student_records:
+    for row in student_records:
         course_year_section = f"{row[3]} - {row[4]}{row[5]}"
         tree.insert("", END, value=(row[0], row[1], course_year_section, sign_in_time))

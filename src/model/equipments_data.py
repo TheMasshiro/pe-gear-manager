@@ -77,4 +77,5 @@ def equipment_name_exists(name):
     conn.commit()
     conn.close()
 
+
 create_table()

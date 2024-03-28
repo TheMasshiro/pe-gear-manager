@@ -8,6 +8,7 @@ from PIL import Image
 
 asset_dir = Path(__file__).parent.absolute()
 
+
 class Equipments(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
@@ -23,7 +24,9 @@ class Equipments(customtkinter.CTkFrame):
         tree_label = customtkinter.CTkLabel(
             equipment_tree, text="Manage Equipments", font=title_font
         )
-        tree_label.grid(row=0, column=0, columnspan=4, padx=30, pady=(30, 50), sticky="n")
+        tree_label.grid(
+            row=0, column=0, columnspan=4, padx=30, pady=(30, 50), sticky="n"
+        )
 
         sort_label = customtkinter.CTkLabel(
             equipment_tree, text="Sort:", font=label_font
@@ -32,24 +35,32 @@ class Equipments(customtkinter.CTkFrame):
 
         self.sort_text = ["Name", "Quantity", "Date"]
         self.sort_index = 0
-        self.sort_button = customtkinter.CTkButton(equipment_tree,
-                                           text=self.sort_text[self.sort_index],
-                                           font=button_font, width=80,
-                                           command=self.sort_command)
-        self.sort_button.grid(row=1, column=1, padx=(5, 0), pady=(20,0), sticky="w")
+        self.sort_button = customtkinter.CTkButton(
+            equipment_tree,
+            text=self.sort_text[self.sort_index],
+            font=button_font,
+            width=80,
+            command=self.sort_command,
+        )
+        self.sort_button.grid(row=1, column=1, padx=(5, 0), pady=(20, 0), sticky="w")
 
         self.order_text = ["↑", "↓"]
         self.order_index = 0
-        self.order_button = customtkinter.CTkButton(equipment_tree,
-                                           text=self.order_text[self.order_index],
-                                           font=button_font, width=30,
-                                           command=self.order_command)
-        self.order_button.grid(row=1, column=1, padx=(90, 0), pady=(20,0), sticky="w")
+        self.order_button = customtkinter.CTkButton(
+            equipment_tree,
+            text=self.order_text[self.order_index],
+            font=button_font,
+            width=30,
+            command=self.order_command,
+        )
+        self.order_button.grid(row=1, column=1, padx=(90, 0), pady=(20, 0), sticky="w")
 
-        search_label = customtkinter.CTkLabel(equipment_tree, text="Search:", font=label_font)
-        search_label.grid(row=1, column=2, padx=5, pady=(20,0), sticky="e")
+        search_label = customtkinter.CTkLabel(
+            equipment_tree, text="Search:", font=label_font
+        )
+        search_label.grid(row=1, column=2, padx=5, pady=(20, 0), sticky="e")
         search_entry = customtkinter.CTkEntry(equipment_tree, placeholder_text="Name")
-        search_entry.grid(row=1, column=3, padx=5, pady=(20,0), sticky="w")
+        search_entry.grid(row=1, column=3, padx=5, pady=(20, 0), sticky="w")
 
         style = ttk.Style()
         style.theme_use("default")
@@ -89,13 +100,16 @@ class Equipments(customtkinter.CTkFrame):
         tree.grid(row=2, column=0, columnspan=4, padx=30, pady=(20, 35), sticky="nswe")
 
         add_equipment = customtkinter.CTkFrame(self)
-        add_equipment.grid_columnconfigure((0,1), weight=1)
+        add_equipment.grid_columnconfigure((0, 1), weight=1)
         add_equipment.grid_rowconfigure((0, 1, 2, 3, 4), weight=1)
         add_equipment.grid(row=0, column=1, sticky="we")
 
-        add_equipment_image = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "inventory_image.png"),
-            size=(90, 90))
-        equipment_image = customtkinter.CTkLabel(add_equipment, text="", image=add_equipment_image)
+        add_equipment_image = customtkinter.CTkImage(
+            Image.open(asset_dir / "assets" / "inventory_image.png"), size=(90, 90)
+        )
+        equipment_image = customtkinter.CTkLabel(
+            add_equipment, text="", image=add_equipment_image
+        )
         equipment_image.grid(row=0, column=0, columnspan=2, sticky="we")
 
         add_equipment_label = customtkinter.CTkLabel(
@@ -118,18 +132,20 @@ class Equipments(customtkinter.CTkFrame):
         )
         quantity_label.grid(row=3, column=0, padx=20, pady=20, sticky="e")
 
-        quantity_entry = customtkinter.CTkEntry(add_equipment, justify="center", width=80)
+        quantity_entry = customtkinter.CTkEntry(
+            add_equipment, justify="center", width=80
+        )
         quantity_entry.grid(row=3, column=1, padx=(20, 30), pady=20, sticky="w")
 
         add_button = customtkinter.CTkButton(
             add_equipment, text="Add", font=button_font
         )
-        add_button.grid(row=4, column=0, padx=20, pady=(20,10), sticky="e")
+        add_button.grid(row=4, column=0, padx=20, pady=(20, 10), sticky="e")
 
         update_button = customtkinter.CTkButton(
             add_equipment, text="Update", font=button_font
         )
-        update_button.grid(row=4, column=1, padx=20, pady=(20,10), sticky="w")
+        update_button.grid(row=4, column=1, padx=20, pady=(20, 10), sticky="w")
 
         clear_button = customtkinter.CTkButton(
             add_equipment, text="Clear", font=button_font
@@ -144,7 +160,6 @@ class Equipments(customtkinter.CTkFrame):
             font=button_font,
         )
         delete_button.grid(row=5, column=1, padx=(20, 30), pady=(10, 35), sticky="w")
-
 
         self.print_current_sort()
         self.print_current_order()

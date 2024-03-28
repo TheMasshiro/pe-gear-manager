@@ -11,4 +11,3 @@ from .equipments_data import update_equipment
 from .equipments_data import delete_equipment
 from .equipments_data import equipment_id_exists
 from .equipments_data import equipment_name_exists
-

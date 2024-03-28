@@ -20,13 +20,13 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.main_frame = main_frame
         self.menus = []
-        self.values=[
-                "Student Login",
-                "Student Logout",
-                "Manage Equipments",
-                "Manage Students",
-                "Return History",
-            ]
+        self.values = [
+            "Student Login",
+            "Student Logout",
+            "Manage Equipments",
+            "Manage Students",
+            "Return History",
+        ]
 
         self.grid_rowconfigure(9, weight=1)
 
@@ -66,12 +66,29 @@ class MenuFrame(customtkinter.CTkFrame):
         self.main_frame.show_frame(value)
 
     def selected_menu(self, value):
-        self.menus[0].configure(fg_color=("gray75", "gray25") if value == "Student Login" else "transparent")
-        self.menus[1].configure(fg_color=("gray75", "gray25") if value == "Student Logout" else "transparent")
-        self.menus[2].configure(fg_color=("gray75", "gray25") if value == "Manage Equipments" else "transparent")
-        self.menus[3].configure(fg_color=("gray75", "gray25") if value == "Manage Students" else "transparent")
-        self.menus[4].configure(fg_color=("gray75", "gray25") if value == "Return History" else "transparent")
-
+        self.menus[0].configure(
+            fg_color=("gray75", "gray25") if value == "Student Login" else "transparent"
+        )
+        self.menus[1].configure(
+            fg_color=(
+                ("gray75", "gray25") if value == "Student Logout" else "transparent"
+            )
+        )
+        self.menus[2].configure(
+            fg_color=(
+                ("gray75", "gray25") if value == "Manage Equipments" else "transparent"
+            )
+        )
+        self.menus[3].configure(
+            fg_color=(
+                ("gray75", "gray25") if value == "Manage Students" else "transparent"
+            )
+        )
+        self.menus[4].configure(
+            fg_color=(
+                ("gray75", "gray25") if value == "Return History" else "transparent"
+            )
+        )
 
 
 class MainFrame(customtkinter.CTkFrame):
@@ -91,6 +108,7 @@ class MainFrame(customtkinter.CTkFrame):
         generate_frames(
             self.login, self.logout, self.equipments, self.students, self.history, value
         )
+
 
 class App(customtkinter.CTk):
     def __init__(self):
