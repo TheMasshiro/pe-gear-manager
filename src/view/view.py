@@ -32,12 +32,26 @@ class MenuFrame(customtkinter.CTkFrame):
 
         university_icon = customtkinter.CTkImage(
             Image.open(asset_dir / "assets" / "school_logo.png"),
-            size=(90, 90),
+            size=(120, 120),
         )
         university_logo = customtkinter.CTkLabel(self, text="", image=university_icon)
         university_logo.grid(row=0, column=0, padx=30, pady=30, sticky="nwe")
 
+
+        login_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "login.png"))
+        logout_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "logout.png"))
+        equipments_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "equipment_data.png"))
+        students_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "students_data.png"))
+        history_icon = customtkinter.CTkImage(Image.open(asset_dir / "assets" / "menu_icons" / "return_history.png"))
+        icon_mapping = {
+    "Student Login": login_icon,
+    "Student Logout": logout_icon,
+    "Manage Equipments": equipments_icon,
+    "Manage Students": students_icon,
+    "Return History": history_icon,
+}
         for i, value in enumerate(self.values):
+            icon = icon_mapping.get(value, None)
             self.menu = customtkinter.CTkButton(
                 self,
                 text=value,
@@ -47,6 +61,7 @@ class MenuFrame(customtkinter.CTkFrame):
                 height=50,
                 text_color=("gray10", "gray90"),
                 hover_color=("gray70", "gray30"),
+                image=icon,
                 anchor="w",
                 command=lambda value=value: self.get_value(value),
             )
