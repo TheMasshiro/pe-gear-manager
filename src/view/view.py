@@ -3,6 +3,7 @@ import customtkinter
 from .frames.login import Login
 from .frames.logout import Logout
 from .frames.manage_equipments import Equipments
+from .frames.manage_students import Students
 from .frames.history import History
 from src.controller import generate_frames
 from .fonts import menu_font
@@ -83,11 +84,12 @@ class MainFrame(customtkinter.CTkFrame):
         self.login = Login(self)
         self.logout = Logout(self)
         self.equipments = Equipments(self)
+        self.students = Students(self)
         self.history = History(self)
 
     def show_frame(self, value):
         generate_frames(
-            self.login, self.logout, self.equipments, self.history, value
+            self.login, self.logout, self.equipments, self.students, self.history, value
         )
 
 class App(customtkinter.CTk):
